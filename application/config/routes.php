@@ -21,11 +21,12 @@ $route['rak'] = 'Rak/index';
 $route['boq'] = 'Boq/index';
 $route['peminjaman'] = 'Peminjaman/index';
 $route['pengembalian'] = 'Pengembalian/index';
+$route['denda'] = 'Denda/index'; // Rute untuk fitur Denda
 //user
 $route['user'] = 'User/index';
 //laporan
-$route['lapengadaan'] = 'Laporan/pengadaan';
-$route['lapeminjaman'] = 'Laporan/peminjaman';
+// $route['lapengadaan'] = 'Laporan/pengadaan';
+// $route['lapeminjaman'] = 'Laporan/peminjaman';
 
 $route['(:any)'] = 'gagal/index/$1';
 $route['404_override'] = 'Gagal/index';

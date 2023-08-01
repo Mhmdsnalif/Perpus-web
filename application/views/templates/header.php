@@ -102,6 +102,7 @@
                         <a class="collapse-item active" href="<?= base_url() ?>kategori">Kategori</a>
                         <a class="collapse-item active" href="<?= base_url() ?>penerbit">Penerbit</a>
                         <a class="collapse-item active" href="<?= base_url() ?>rak">Rak</a>
+                        <a class="collapse-item active" href="<?= base_url() ?>denda">Denda</a>
                         <?php endif; ?>
                     </div>
 

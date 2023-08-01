@@ -103,7 +103,7 @@ $admin = $this->session->userdata('level') == 'Administrasi';
 <?php if($this->session->flashdata('Pesan')): ?>
 <?= $this->session->flashdata('Pesan'); ?>
 <?php else: ?>
-<script>
+<!-- <script>
 $(document).ready(function() {
 
     let timerInterval
@@ -119,6 +119,6 @@ $(document).ready(function() {
     }).then((result) => {
         
     })
-});
+}); -->
 </script>
 <?php endif; ?>

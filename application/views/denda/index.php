@@ -3,7 +3,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Rak</h1>
+        <h1 class="h3 mb-0 text-gray-800">Data Denda</h1>
 
         <a href="" data-toggle="modal" data-target="#form" class="btn btn-sm btn-primary btn-icon-split">
             <span class="text text-white">Tambah Data</span>
@@ -24,47 +24,39 @@
                         <thead>
                             <tr>
                                 <th width="1%">No</th>
-                                <th>Nomor Rak</th>
-                                <th>Nama Rak</th>
-                                <th>Keterangan</th>
+                                <th>ID Denda</th>
+                                <th>Denda</th>
                                 <th width="1%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tbody">
 
-                            <?php $no=1; foreach ($rak as $r) { ?>
+                            <?php $no=1; foreach ($denda as $d) { ?>
                             <tr>
                                 <td>
                                     <?= $no++ ?>
                                 </td>
                                 <td>
-                                    <?php if($r->id_rak == ''): ?>
+                                    <?php if($d->id_denda == ''): ?>
                                     <i> (Tidak diisi) </i>
                                     <?php else: ?>
-                                    <?= $r->id_rak ?>
+                                    <?= $d->id_denda ?>
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <?php if($r->rak == ''): ?>
+                                    <?php if($d->denda == ''): ?>
                                     <i> (Tidak diisi) </i>
                                     <?php else: ?>
-                                    <?= $r->rak ?>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <?php if($r->keterangan == ''): ?>
-                                    <i> (Tidak diisi) </i>
-                                    <?php else: ?>
-                                    <?= $r->keterangan ?>
+                                    <?= $d->denda ?>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <center>
                                         <a href="#" data-toggle="modal" data-target="#formU"
-                                            onclick="ambilData('<?= $r->id_rak ?>')" class="btn btn-circle btn-success btn-sm">
+                                            onclick="ambilData('<?= $d->id_denda ?>')" class="btn btn-circle btn-success btn-sm">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a href="#" onclick="konfirmasi('<?= $r->id_rak ?>')"
+                                        <a href="#" onclick="konfirmasi('<?= $d->id_denda ?>')"
                                             class="btn btn-circle btn-danger btn-sm">
                                             <i class="fas fa-trash"></i>
                                         </a>
@@ -89,11 +81,11 @@
 
 <!-- Form input -->
 <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="<?= base_url() ?>rak/proses_tambah"  name="myForm" method="POST" onsubmit="return validateForm()">
+    <form action="<?= base_url() ?>denda/proses_tambah"  name="myForm" method="POST" onsubmit="return validateForm()">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-primary">
-                    <h5 class="modal-title text-white font-weight-bold" id="exampleModalLabel">Tambah Rak</h5>
+                    <h5 class="modal-title text-white font-weight-bold" id="exampleModalLabel">Tambah Denda</h5>
                     <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -101,21 +93,15 @@
 
                 <div class="col-lg-12">
                     <br>
-                    <!-- Nomor Rak -->
-                    <div class="form-group"><label>Nomor Rak</label>
-                        <input class="form-control" name="norak" type="text" value="<?= $kode ?>" readonly>
+                    <!-- ID Denda (Kode) -->
+                    <div class="form-group"><label>ID Denda</label>
+                        <input class="form-control" name="id_denda" type="text" value="<?= $kode ?>" readonly>
                     </div>
 
-                    <!-- Nama Rak -->
-                    <div class="form-group"><label>Nama Rak</label>
-                        <input class="form-control" name="rak" type="text" placeholder="">
+                    <!-- Denda -->
+                    <div class="form-group"><label>Denda</label>
+                        <input class="form-control" name="denda" type="number" placeholder="">
                     </div>
-
-                    <!-- Keterangan -->
-                    <div class="form-group"><label>Keterangan</label>
-                        <textarea class="form-control" name="ket"></textarea>
-                    </div>
-
                 </div>
 
                 <div class="modal-footer">
@@ -139,11 +125,11 @@
 
 <!-- form ubah -->
 <div class="modal fade" id="formU" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="<?= base_url() ?>rak/proses_ubah"  name="myFormUpdate" method="POST" onsubmit="return validateFormUpdate()">
+    <form action="<?= base_url() ?>denda/proses_ubah"  name="myFormUpdate" method="POST" onsubmit="return validateFormUpdate()">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-success">
-                    <h5 class="modal-title text-white font-weight-bold" id="exampleModalLabel">Ubah Rak</h5>
+                    <h5 class="modal-title text-white font-weight-bold" id="exampleModalLabel">Ubah Denda</h5>
                     <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -151,21 +137,17 @@
 
                 <div class="col-lg-12">
                     <br>
-                    <!-- Nomor Rak -->
-                    <div class="form-group"><label>Nomor Rak</label>
-                        <input class="form-control" name="norak" id="norak" type="text" value="<?= $kode ?>" readonly>
+                    <!-- ID Denda (Kode) -->
+                    <div class="form-group">
+                        <label>ID Denda</label>
+                        <input class="form-control" name="id_denda" id="id_denda" type="text" readonly>
                     </div>
 
-                    <!-- Nama Rak -->
-                    <div class="form-group"><label>Nama Rak</label>
-                        <input class="form-control" name="rak" id="rak" type="text" placeholder="">
+                    <!-- Denda -->
+                    <div class="form-group">
+                        <label>Denda</label>
+                        <input class="form-control" name="denda" id="denda" type="number" placeholder="">
                     </div>
-
-                    <!-- Keterangan -->
-                    <div class="form-group"><label>Keterangan</label>
-                        <textarea class="form-control" name="ket" id="ket"></textarea>
-                    </div>
-
                 </div>
 
                 <div class="modal-footer">
@@ -187,9 +169,10 @@
     </form>
 </div>
 
+
 <script src="<?= base_url(); ?>assets/js/jquery.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/rak.js"></script>
-<script src="<?= base_url(); ?>assets/js/validasi/formrak.js"></script>
+<script src="<?= base_url(); ?>assets/js/denda.js"></script>
+<script src="<?= base_url(); ?>assets/js/validasi/formdenda.js"></script>
 <?php if($this->session->flashdata('Pesan')): ?>
 <?= $this->session->flashdata('Pesan') ?>
 <?php else: ?>

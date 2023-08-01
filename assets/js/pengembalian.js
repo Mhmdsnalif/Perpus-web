@@ -4,9 +4,7 @@ $(document).ready(function() {
     });
     $('.dataTables_length').addClass('bs-select');
 
-
     $('#loding').hide();
-
 });
 
 function konfirmasi(id) {
@@ -64,89 +62,88 @@ function ambilDataPinjam() {
             url: base_url,
             dataType: 'json',
             success: function(hasil) {
-
                 $("#tbody").empty();
                 $('#loding').hide();
 
                 $('#tglpinjam').text(hasil[0].tgl_pinjam);
                 $('#tempo').text(hasil[0].tempo);
-                if (selisih(hasil[0].tempo.split('-'), datenow) > 0) {
-                    $('#lambat').text(selisih(hasil[0].tempo.split('-'), datenow) + " hari");
-                    $("[name='terlambat']").val(selisih(hasil[0].tempo.split('-'), datenow) + " hari");
-                    $("[name='denda']").val(denda(selisih(hasil[0].tempo.split('-'), datenow)));
-                    $('#denda').text(denda(selisih(hasil[0].tempo.split('-'), datenow)));
-                } else {
-                    $('#lambat').text("-");
-                    $("[name='terlambat']").val("-");
-                    $('#denda').text("-");
-                    $("[name='denda']").val("-");
-                }
 
-                ambilBuku(hasil[0].id_pinjam);
+                $.ajax({
+                    type: 'GET',
+                    url: link + 'denda/getDendaperhari', // Ubah "denda" sesuai dengan controller yang digunakan untuk mengambil dendaperhari dari database
+                    dataType: 'json',
+                    success: function(response) {
+                        var dendaperhari = parseFloat(response.denda);
+                        if (isNaN(dendaperhari)) {
+                            dendaperhari = 0;
+                        }
 
+                        if (selisih(hasil[0].tempo.split('-'), datenow) > 0) {
+                            $('#lambat').text(selisih(hasil[0].tempo.split('-'), datenow) + " hari");
+                            $("[name='terlambat']").val(selisih(hasil[0].tempo.split('-'), datenow) + " hari");
+                            $("[name='denda']").val(denda(selisih(hasil[0].tempo.split('-'), datenow), dendaperhari));
+                            $('#denda').text(denda(selisih(hasil[0].tempo.split('-'), datenow), dendaperhari));
+                        } else {
+                            $('#lambat').text("-");
+                            $("[name='terlambat']").val("-");
+                            $('#denda').text("-");
+                            $("[name='denda']").val("-");
+                        }
 
+                        ambilBuku(hasil[0].id_pinjam);
+                    }
+                });
             }
         });
     }
+}
 
+function ambilBuku(idpinjam) {
+    var link = $('#baseurl').val();
+    var base_url = link + 'pengembalian/getListBuku';
+    var pinjam = idpinjam;
 
-    function ambilBuku(idpinjam) {
-        var link = $('#baseurl').val();
-        var base_url = link + 'pengembalian/getListBuku';
-        var pinjam = idpinjam;
+    $.ajax({
+        type: 'POST',
+        data: 'id=' + pinjam,
+        url: base_url,
+        dataType: 'json',
+        success: function(hasil) {
+            for (var i = 0; i < hasil.length; i++) {
+                var newRow = $("<tr class='bounceIn'>");
+                var cols = "";
+                var counter = i + 1;
 
-        $.ajax({
-            type: 'POST',
-            data: 'id=' + pinjam,
-            url: base_url,
-            dataType: 'json',
-            success: function(hasil) {
+                cols += '<td>' + counter + '.</td>';
+                cols += '<td>' + hasil[i].id_buku + '</td>';
+                cols += '<td>' + hasil[i].judul + '</td>';
+                cols += '<td>' + hasil[i].isbn + '</td>';
+                cols += '<td>' + hasil[i].pengarang + '</td>';
+                cols += '<td>' + hasil[i].qty + '</td>';
 
-
-                for (var i = 0; i < hasil.length; i++) {
-                    var newRow = $("<tr class='bounceIn'>");
-                    var cols = "";
-                    var counter = i + 1;
-
-                    cols += '<td>' + counter + '.</td>';
-                    cols += '<td>' + hasil[i].id_buku + '</td>';
-                    cols += '<td>' + hasil[i].judul + '</td>';
-                    cols += '<td>' + hasil[i].isbn + '</td>';
-                    cols += '<td>' + hasil[i].pengarang + '</td>';
-                    cols += '<td>' + hasil[i].qty + '</td>';
-
-                    newRow.append(cols);
-                    $("table").append(newRow);
-
-                }
-
+                newRow.append(cols);
+                $("table").append(newRow);
             }
-        });
-    }
+        }
+    });
+}
 
+function selisih(first, second) {
+    // Copy date parts of the timestamps, discarding the time parts.
+    var one = new Date(first[0], first[1], first[2]);
+    var two = new Date(second[0], second[1], second[2]);
 
-    function selisih(first, second) {
+    // Do the math.
+    var millisecondsPerDay = 1000 * 60 * 60 * 24;
+    var millisBetween = two.getTime() - one.getTime();
+    var days = millisBetween / millisecondsPerDay;
 
-        // Copy date parts of the timestamps, discarding the time parts.
-        var one = new Date(first[0], first[1], first[2]);
-        var two = new Date(second[0], second[1], second[2]);
+    // Round down.
+    return Math.floor(days);
+}
 
-        // // Do the math.
-        var millisecondsPerDay = 1000 * 60 * 60 * 24;
-        var millisBetween = two.getTime() - one.getTime();
-        var days = millisBetween / millisecondsPerDay;
-
-        // Round down.
-        return Math.floor(days);
-    }
-
-    function denda(terlambat) {
-        var hari = terlambat;
-        var dendaperhari = 3000;
-
-        var total = hari * dendaperhari;
-        return "Rp." + total;
-
-    }
-
+function denda(terlambat, dendaperhari) {
+    var hari = terlambat;
+    var total = hari * dendaperhari;
+    return "Rp." + total;
 }

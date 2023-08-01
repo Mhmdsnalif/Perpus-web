@@ -1,6 +1,11 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
+<?php
+// Cek apakah pengguna memiliki status atau role sebagai admin
+$admin = $this->session->userdata('level') == 'Administrasi';
+?>
+
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Data Anggota</h1>
@@ -29,7 +34,9 @@
                                 <th>Jenis Kelamin</th>
                                 <th>Umur</th>
                                 <th>Alamat</th>
+                                <?php if ($admin): ?>
                                 <th width="1%">Aksi</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody style="cursor:pointer;" id="tbody"> 
@@ -43,6 +50,7 @@
                                 <td onclick="detail('<?= $a->id_anggota ?>')"><?= $a->jk ?></td>
                                 <td onclick="detail('<?= $a->id_anggota ?>')"><?= $a->umur ?></td>
                                 <td onclick="detail('<?= $a->id_anggota ?>')"><?= $a->alamat ?></td>
+                                <?php if ($admin): ?>
                                 <td>
                                     <center>
                                         <a href="<?= base_url() ?>anggota/ubah/<?= $a->id_anggota ?>"
@@ -55,6 +63,7 @@
                                         </a>
                                     </center>
                                 </td>
+                                <?php endif; ?>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -76,7 +85,7 @@
 <?php if($this->session->flashdata('Pesan')): ?>
 <?= $this->session->flashdata('Pesan') ?>
 <?php else: ?>
-<script>
+<!-- <script>
 $(document).ready(function() {
     let timerInterval
     Swal.fire({
@@ -92,5 +101,5 @@ $(document).ready(function() {
         
     })
 });
-</script>
+</script> -->
 <?php endif; ?>

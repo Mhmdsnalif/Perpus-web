@@ -50,7 +50,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label>Tanggal Kembali</label>
-                                    <input type="text" name="tglkembali" readonly class="form-control"
+                                    <input type="date" name="tglkembali" class="form-control"
                                         value="<?= $tglplus3 ?>">
                                 </div>
                             </div>

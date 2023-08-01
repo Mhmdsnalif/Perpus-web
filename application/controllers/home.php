@@ -9,7 +9,6 @@ class Home extends CI_Controller {
 	$this->load->library('pagination');
 	$this->load->helper('cookie');
 	$this->load->model('peminjaman_model');
-	$this->load->model('pengadaan_model');
 	$this->load->model('anggota_model');
 	$this->load->model('buku_model');
   }
@@ -20,7 +19,6 @@ class Home extends CI_Controller {
 
 		$data['jmlpinjam'] = $this->peminjaman_model->data()->num_rows();
 		$data['jmlanggota'] = $this->anggota_model->data()->num_rows();
-		$data['jmlpengadaan'] = $this->pengadaan_model->data()->num_rows();
 		$data['jmlbuku'] = $this->buku_model->data()->num_rows();
 		$data['top3buku'] = $this->peminjaman_model->top3buku()->result();
 		$data['top3anggota'] = $this->peminjaman_model->top3anggota()->result();
