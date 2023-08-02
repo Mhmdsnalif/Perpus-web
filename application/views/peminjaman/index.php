@@ -26,22 +26,16 @@ function tgl_indo($tanggal){
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<?php
-// Cek apakah pengguna memiliki status atau role sebagai petugas
-// Ganti 'petugas' dengan nilai sesuai status atau role yang diharapkan
-$petugas = $this->session->userdata('level') == 'Petugas';
-?>
-
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Data Peminjaman</h1>
-    <?php if ($petugas): ?>
+    
         <a href="<?= base_url() ?>peminjaman/tambah" class="btn btn-sm btn-primary btn-icon-split">
             <span class="text text-white">Pinjam Buku</span>
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
         </a>
-    <?php endif; ?>
+    
 </div>
 
 
@@ -91,11 +85,9 @@ $petugas = $this->session->userdata('level') == 'Petugas';
                                 <td>
                                     <a href="<?= base_url() ?>peminjaman/detail/<?= $p->id_pinjam ?>"
                                         class="btn btn-primary btn-sm btn-circle"><i class="fa fa-eye"></i></a>
-                                        <?php if ($petugas): ?>
                                         <a href="#" onclick="konfirmasi('<?= $p->id_pinjam ?>')"
                                         class="btn btn-circle btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
-                                        <?php endif; ?>
                                     </a>
                                 </td>
                             </tr>

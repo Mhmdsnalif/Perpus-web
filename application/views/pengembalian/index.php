@@ -1,22 +1,17 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-<?php
-// Cek apakah pengguna memiliki status atau role sebagai petugas
-// Ganti 'petugas' dengan nilai sesuai status atau role yang diharapkan
-$petugas = $this->session->userdata('level') == 'Petugas';
-?>
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Data Pengembalian</h1>
-        <?php if ($petugas): ?>
+        
         <a href="<?= base_url() ?>pengembalian/tambah" class="btn btn-sm btn-primary btn-icon-split">
             <span class="text text-white">Pengembalian Buku</span>
             <span class="icon text-white-50">
                 <i class="fas fa-undo"></i>
             </span>
         </a>
-        <?php endif; ?>
+        
     </div>
 
     <!-- tabel pengembalian -->
@@ -35,9 +30,9 @@ $petugas = $this->session->userdata('level') == 'Petugas';
                                 <th>Jatuh Tempo</th>
                                 <th>Terlambat</th>
                                 <th>Denda</th>
-                                <?php if ($petugas): ?>
+                                
                                 <th width="1%">Aksi</th>
-                                <?php endif; ?>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -51,14 +46,14 @@ $petugas = $this->session->userdata('level') == 'Petugas';
                                 <td><?= $p->tempo ?></td>
                                 <td><?= $p->terlambat ?></td>
                                 <td><?= $p->denda ?></td>
-                                <?php if ($petugas): ?>
+                                
                                 <td>
                                     <a href="#" onclick="konfirmasi('<?= $p->id_kembali ?>')"
                                         class="btn btn-circle btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
-                                <?php endif; ?>
+                                
                             </tr>
                             <?php endforeach; ?>
                         </tbody>

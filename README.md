@@ -25,6 +25,7 @@ features:
 - Data Rak
 - Data Anggota
 - Data Pengadaan Buku
+- Denda
 
 ---Transaksi---
 - Transaksi Peminjaman
